@@ -1,3 +1,5 @@
-# GitHub Sponsors displays the repository Sponsor button after the owner account
-# completes GitHub's sponsorship enrollment and payout verification.
+# GitHub Sponsors becomes available after the owner completes enrollment.
+# Razorpay remains available as the repository's direct support option.
 github: [dmenh]
+custom:
+  - https://razorpay.me/@dineshm01

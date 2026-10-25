@@ -140,4 +140,14 @@ docs/        architecture, API scope, security and deployment documents
 
 Copyright 2026 Dinesh. All rights reserved. The repository is distributed under the included [proprietary license](LICENSE). Author and contact details are in [AUTHORS.md](AUTHORS.md), [NOTICE](NOTICE), the application About page and [LinkedIn](https://www.linkedin.com/in/dineshwarmanukonda/).
 
-GitHub sponsorship configuration is included in `.github/FUNDING.yml`. The Sponsor button becomes active after the repository owner completes GitHub Sponsors enrollment and payout verification.
+## ❤️ Support the project
+
+Identity API Lab is free to explore and run locally under the included repository license.
+
+If the project helped you learn identity and access management, API integration, authentication or connector development, you can optionally support its continued development.
+
+**[Support Identity API Lab through Razorpay](https://razorpay.me/@dineshm01)**
+
+You can also use the **Sponsor** button at the top of this repository. Contributions help fund protocol compatibility, security testing, documentation and demonstration environments.
+
+Thank you for supporting continued development.
