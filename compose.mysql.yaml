@@ -1,0 +1,44 @@
+name: identity-api-lab-mysql
+services:
+  app:
+    build: .
+    image: identity-api-lab:local
+    ports:
+      - "${APP_BIND:-127.0.0.1}:${APP_PORT:-8787}:8000"
+      - "${APP_BIND:-127.0.0.1}:${GRPC_PORT:-50051}:50051"
+    environment:
+      DATABASE_URL: "mysql+pymysql://lab:${DB_PASSWORD:?Run the installation script first}@db:3306/identity_lab?charset=utf8mb4"
+      ADMIN_PASSWORD: "${ADMIN_PASSWORD:?Run the installation script first}"
+      DEMO_PASSWORD: "${DEMO_PASSWORD:?Run the installation script first}"
+      PUBLIC_URL: "${PUBLIC_URL:-http://localhost:8787}"
+      SERVER_SIGNING_KEY: "${SERVER_SIGNING_KEY:?Run the installation script first}"
+      COOKIE_SECURE: "${COOKIE_SECURE:-false}"
+      ALLOWED_HOSTS: "${ALLOWED_HOSTS:-localhost,127.0.0.1}"
+      ALLOW_PRIVATE_SSO: "${ALLOW_PRIVATE_SSO:-false}"
+      ALLOW_INSECURE_SSO: "${ALLOW_INSECURE_SSO:-false}"
+      ALLOW_PRIVATE_SFTP: "${ALLOW_PRIVATE_SFTP:-false}"
+      GRPC_ENABLED: "${GRPC_ENABLED:-true}"
+      GRPC_BIND: "0.0.0.0:50051"
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]
+  db:
+    image: mysql:8.4
+    environment:
+      MYSQL_DATABASE: identity_lab
+      MYSQL_USER: lab
+      MYSQL_PASSWORD: "${DB_PASSWORD:?Run the installation script first}"
+      MYSQL_ROOT_PASSWORD: "${DB_ROOT_PASSWORD:?Run the installation script first}"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "MYSQL_PWD=$$MYSQL_PASSWORD mysql -h 127.0.0.1 -u lab -D identity_lab -e 'SELECT 1' >/dev/null 2>&1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+    restart: unless-stopped
+volumes:
+  mysql-data:

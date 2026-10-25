@@ -1,0 +1,47 @@
+name: identity-api-lab
+services:
+  app:
+    build: .
+    image: identity-api-lab:local
+    ports:
+      - "${APP_BIND:-127.0.0.1}:${APP_PORT:-8787}:8000"
+      - "${APP_BIND:-127.0.0.1}:${GRPC_PORT:-50051}:50051"
+    environment:
+      DATABASE_URL: "postgresql+psycopg://lab:${DB_PASSWORD:?Run the installation script first}@db:5432/identity_lab"
+      ADMIN_PASSWORD: "${ADMIN_PASSWORD:?Run the installation script first}"
+      DEMO_PASSWORD: "${DEMO_PASSWORD:?Run the installation script first}"
+      PUBLIC_URL: "${PUBLIC_URL:-http://localhost:8787}"
+      SERVER_SIGNING_KEY: "${SERVER_SIGNING_KEY:?Run the installation script first}"
+      COOKIE_SECURE: "${COOKIE_SECURE:-false}"
+      ALLOWED_HOSTS: "${ALLOWED_HOSTS:-localhost,127.0.0.1}"
+      ALLOW_PRIVATE_SSO: "${ALLOW_PRIVATE_SSO:-false}"
+      ALLOW_INSECURE_SSO: "${ALLOW_INSECURE_SSO:-false}"
+      ALLOW_PRIVATE_SFTP: "${ALLOW_PRIVATE_SFTP:-false}"
+      GRPC_ENABLED: "${GRPC_ENABLED:-true}"
+      GRPC_BIND: "0.0.0.0:50051"
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]
+    logging:
+      options: {max-size: "10m", max-file: "3"}
+  db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: identity_lab
+      POSTGRES_USER: lab
+      POSTGRES_PASSWORD: "${DB_PASSWORD:?Run the installation script first}"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U lab -d identity_lab"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    restart: unless-stopped
+    logging:
+      options: {max-size: "10m", max-file: "3"}
+volumes:
+  postgres-data:

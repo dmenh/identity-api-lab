@@ -1,0 +1,31 @@
+services:
+  - type: web
+    name: identity-api-lab
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    autoDeployTrigger: off
+    healthCheckPath: /health
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: identity-api-lab-db
+          property: connectionString
+      - key: ADMIN_PASSWORD
+        generateValue: true
+      - key: DEMO_PASSWORD
+        generateValue: true
+      - key: SERVER_SIGNING_KEY
+        generateValue: true
+      - key: COOKIE_SECURE
+        value: "true"
+      - key: ALLOWED_HOSTS
+        value: "*.onrender.com"
+      - key: ALLOW_PRIVATE_SSO
+        value: "false"
+      - key: ALLOW_INSECURE_SSO
+        value: "false"
+
+databases:
+  - name: identity-api-lab-db
+    databaseName: identity_lab
+    user: identity_lab

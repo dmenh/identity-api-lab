@@ -1,0 +1,11 @@
+syntax = "proto3";
+package identitylab.v1;
+import "google/protobuf/struct.proto";
+
+service IdentityService {
+  rpc ListUsers(google.protobuf.Struct) returns (google.protobuf.Struct);
+  rpc GetUser(google.protobuf.Struct) returns (google.protobuf.Struct);
+  rpc CreateUser(google.protobuf.Struct) returns (google.protobuf.Struct);
+  rpc UpdateUser(google.protobuf.Struct) returns (google.protobuf.Struct);
+  rpc DisableUser(google.protobuf.Struct) returns (google.protobuf.Struct);
+}
