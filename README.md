@@ -6,6 +6,10 @@ Identity API Lab is a lightweight, self-hosted environment for testing identity 
 
 > This is a testing lab. It does not connect to a bank or contain real customer data. Protocol support is described as an implemented profile; it is not a blanket standards certification.
 
+[Download the 10-page product brochure](docs/brochure/Identity-API-Lab-Product-Brochure.pdf) · [View architecture](docs/HLD.md) · [Read the API contract](backend/API_CONTRACT.md) · [Support the project](SUPPORT.md)
+
+![Identity API Lab Command Center](docs/media/command-center.jpg)
+
 ## Highlights
 
 - **11 protocol adapters:** REST, SCIM 2.0, SCIM 1.1, SOAP 1.1, SOAP 1.2, GraphQL, OData 4.0, native gRPC, JSON-RPC 2.0, signed webhooks and CSV/SFTP.
@@ -33,6 +37,8 @@ sh scripts/lab.sh install
 Open **http://localhost:8787**. Sign in as `admin` with `ADMIN_PASSWORD` from the generated `.env`. Active sample employees use `DEMO_PASSWORD`. The installer generates secrets, builds the application, initializes the database and waits for health checks. It does not print passwords into build logs.
 
 The default installation uses PostgreSQL. Choose another database with `scripts/install.ps1 -Database mysql`, `scripts/install.ps1 -Database sqlite`, `sh scripts/install.sh mysql`, or `sh scripts/install.sh sqlite`. Each choice uses a separate data volume.
+
+The repository also includes `railway.json` for a Railway deployment and `render.yaml` for a Render blueprint. Add a managed PostgreSQL service, set the documented environment variables and expose the HTTP service. Native gRPC additionally needs a platform TCP endpoint.
 
 ## Useful commands
 
@@ -133,3 +139,5 @@ docs/        architecture, API scope, security and deployment documents
 ## License and author
 
 Copyright 2026 Dinesh. All rights reserved. The repository is distributed under the included [proprietary license](LICENSE). Author and contact details are in [AUTHORS.md](AUTHORS.md), [NOTICE](NOTICE), the application About page and [LinkedIn](https://www.linkedin.com/in/dineshwarmanukonda/).
+
+GitHub sponsorship configuration is included in `.github/FUNDING.yml`. The Sponsor button becomes active after the repository owner completes GitHub Sponsors enrollment and payout verification.
