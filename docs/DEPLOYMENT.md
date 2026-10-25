@@ -26,7 +26,21 @@ The same tool supports `start`, `stop`, `restart`, `status`, `logs`, `verify`,
 `passwords` and `update`. `passwords` deliberately requires a direct command so
 credentials are not printed in ordinary installation logs.
 
-## One-click developer environment
+## Railway deployment
+
+The repository includes `railway.json` and a production Dockerfile. In Railway,
+create a project from the GitHub repository, add PostgreSQL, then configure
+`DATABASE_URL`, `ADMIN_PASSWORD`, `DEMO_PASSWORD`, `SERVER_SIGNING_KEY`,
+`PUBLIC_URL`, `ALLOWED_HOSTS` and `COOKIE_SECURE=true`. Generate long random
+values for every secret and set `PUBLIC_URL` to the assigned HTTPS domain.
+
+Railway exposes the HTTP service through its generated domain. Native gRPC needs
+a separate public TCP endpoint or private-network client access. Keep the
+database service private. A reusable public Railway template additionally
+requires publishing the configured project from the Railway dashboard after the
+first successful deployment.
+
+## Render blueprint
 
 The repository includes `render.yaml`. After the project is published to GitHub,
 add Render's deploy button to the README using the final repository URL. Each
